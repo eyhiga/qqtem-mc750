@@ -1,0 +1,2 @@
+serviceClass: com.example.qqtem.client.GreetingService
+path: 3F9A23E634F88EFB7937B7A698CE5BCA.gwt.rpc
