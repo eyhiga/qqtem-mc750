@@ -21,7 +21,7 @@ public class Main extends Composite implements HasText {
 	public Main() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
-
+	//teste
 	@Override
 	public String getText() {
 		// TODO Auto-generated method stub
