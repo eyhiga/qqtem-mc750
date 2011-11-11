@@ -25,9 +25,11 @@ public class Abas extends Composite {
 	    Label usuariosText = new Label("Usuários");
 	    Label denunciasText = new Label("Denúncias");
 	    
+	    Locais locais = new Locais();
+	    
 	    decoratedTabPanel.add(homeText, "Home");
 	    decoratedTabPanel.add(tagText, "Tags");
-	    decoratedTabPanel.add(locaisText, "Locais");
+	    decoratedTabPanel.add(locais, "Locais");
 	    decoratedTabPanel.add(usuariosText, "Usuários");
 	    decoratedTabPanel.add(denunciasText, "Denúncias");
 	    
