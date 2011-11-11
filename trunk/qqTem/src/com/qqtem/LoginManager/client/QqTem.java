@@ -86,10 +86,10 @@ public class QqTem implements EntryPoint {
 		
 		Abas homeAbas = new Abas();
 		
-		int altura = Window.getClientHeight() - horizontalPanel.getAbsoluteTop();
-		String height = new String("" + altura);
+		//int altura = Window.getClientHeight() - horizontalPanel.getAbsoluteTop();
+		//String height = new String("" + altura);
 		
-		verticalPanel.setSize("100%", "" + height);
+		verticalPanel.setSize("100%", "100%");
 		verticalPanel.add(homeAbas);
 		
 		Window.setTitle("qqTem - Home");
