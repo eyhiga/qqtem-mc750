@@ -18,7 +18,7 @@ import com.google.gwt.event.dom.client.ClickHandler;
 public class Locais extends Composite {
 
 	FlexTable flexTable;
-	FlexTable flexTable_1;
+	FlexTable topCommands;
 	FlexTable dataTable;
 
 	ListBox comboTipo;
@@ -45,9 +45,9 @@ public class Locais extends Composite {
 		SimplePanel simplePanel = new SimplePanel();
 		flexTable.setWidget(0, 0, simplePanel);
 
-		flexTable_1 = new FlexTable();
-		simplePanel.setWidget(flexTable_1);
-		flexTable_1.setSize("100%", "100%");
+		topCommands = new FlexTable();
+		simplePanel.setWidget(topCommands);
+		topCommands.setSize("100%", "100%");
 
 		comboTipo = new ListBox();
 		comboTipo.addItem("Todos");
@@ -55,26 +55,26 @@ public class Locais extends Composite {
 		comboTipo.addItem("Hotel");
 		comboTipo.addItem("Bar");
 		comboTipo.addItem("Parque");
-		flexTable_1.setWidget(0, 0, comboTipo);
+		topCommands.setWidget(0, 0, comboTipo);
 
 		txtbxTxtnome = new TextBox();
-		flexTable_1.setWidget(0, 1, txtbxTxtnome);
+		topCommands.setWidget(0, 1, txtbxTxtnome);
 		txtbxTxtnome.setWidth("300");
 
 		Button btnPesquisar = criarBotaoPesquisar();
-		flexTable_1.setWidget(0, 2, btnPesquisar);
+		topCommands.setWidget(0, 2, btnPesquisar);
 
 		Button btnAdicionar = criarBotaoAdicionar();
-		flexTable_1.setWidget(0, 3, btnAdicionar);
+		topCommands.setWidget(0, 3, btnAdicionar);
 
 		Button btnRemover = criarBotaoRemover();
-		flexTable_1.setWidget(0, 4, btnRemover);
+		topCommands.setWidget(0, 4, btnRemover);
 
-		SimplePanel simplePanel_1 = new SimplePanel();
-		flexTable.setWidget(1, 0, simplePanel_1);
+		SimplePanel bottonPanel = new SimplePanel();
+		flexTable.setWidget(1, 0, bottonPanel);
 
 		dataTable = new FlexTable();
-		simplePanel_1.setWidget(dataTable);
+		bottonPanel.setWidget(dataTable);
 		dataTable.setSize("100%", "100%");
 
 		dataTable.setText(0, 0, "Selecionar");
