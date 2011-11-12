@@ -203,7 +203,7 @@ public class Locais extends Composite {
 	
 	private Button criarBotaoRemover()
 	{
-		Button btnRemover = new Button("Remover");
+		Button btnRemover = new Button("Remover selecionados");
 		
 		btnRemover.addClickHandler(new ClickHandler()
 		{
