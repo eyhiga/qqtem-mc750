@@ -298,20 +298,32 @@ a:visited {
 	border: 1px solid black;
 }
 
-/* stock list header row */
-.watchList {
+.tableList {
   border: 1px solid silver;
   padding: 2px;
   margin-bottom:6px;
 }
 
-.watchListNumericColumn {
-  text-align: right;
-  width:8em;
+.tableListSelecionar {
+	width: 20px;
+	text-align: center;
+}
+
+.tableListTipo {
+	width: 150px;
+}
+
+.tableListNome {
+	width: 250px;
+}
+
+.tableListEndereco {
+	width: 300px;
 }
 
 .tableListHeader {
   background-color: #2062B8;
   color: white;
   font-style: italic;
+  text-align: center;
 }
