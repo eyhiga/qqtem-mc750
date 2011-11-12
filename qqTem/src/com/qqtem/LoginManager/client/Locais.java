@@ -151,7 +151,7 @@ public class Locais extends Composite {
 				vertNome.add(flexNome);
 
 				Label lblNome = new Label("Nome: ");
-				lblNome.setWidth(new String("100px"));
+				lblNome.setWidth(new String("70px"));
 				lblNome.setHorizontalAlignment(Label.ALIGN_RIGHT);
 				flexNome.setWidget(0, 1, lblNome);
 				txtNomePopup = new TextBox();
@@ -166,7 +166,7 @@ public class Locais extends Composite {
 				vertNome.add(flexEndereco);
 
 				Label lblEndereco = new Label("Endereço: ");
-				lblEndereco.setWidth(new String("100px"));
+				lblEndereco.setWidth(new String("70px"));
 				lblEndereco.setHorizontalAlignment(Label.ALIGN_RIGHT);
 				flexEndereco.setWidget(0, 1, lblEndereco);
 				txtEnderecoPopup = new TextBox();
@@ -181,7 +181,7 @@ public class Locais extends Composite {
 				vertTipo.add(flexTipo);
 
 				Label lblTipo = new Label("Tipo: ");
-				lblTipo.setWidth(new String("100px"));
+				lblTipo.setWidth(new String("70px"));
 				lblTipo.setHorizontalAlignment(Label.ALIGN_RIGHT);
 				flexTipo.setWidget(0, 1, lblTipo);
 				listTipoPopup = new ListBox();
@@ -197,8 +197,14 @@ public class Locais extends Composite {
 				dialogContent.setWidget(3, 0, vertDesc);
 
 				FlexTable flexDesc = new FlexTable();
-				flexDesc.setWidget(0, 0, new Label("Descrição: "));
-				flexDesc.setWidget(0, 1, new TextArea());
+				vertDesc.add(flexDesc);
+				Label lblDesc = new Label("Descrição: ");
+				lblDesc.setWidth(new String("70px"));
+				lblDesc.setHorizontalAlignment(Label.ALIGN_RIGHT);
+				flexDesc.setWidget(0, 0, lblDesc);
+				TextArea txtDesc = new TextArea();
+				txtDesc.setWidth(new String("270px"));
+				flexDesc.setWidget(1, 0, txtDesc);
 
 				VerticalPanel vertBotoes = new VerticalPanel();
 				dialogContent.setWidget(4, 0, vertBotoes);
