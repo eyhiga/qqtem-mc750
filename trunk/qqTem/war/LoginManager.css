@@ -307,6 +307,8 @@ a:visited {
 .tableListSelecionar {
 	width: 20px;
 	text-align: center;
+  	padding: 2px;
+  	margin-bottom:6px;
 }
 
 .tableListTipo {
