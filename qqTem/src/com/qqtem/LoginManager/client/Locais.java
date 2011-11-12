@@ -47,7 +47,7 @@ public class Locais extends Composite {
 
 		topCommands = new FlexTable();
 		simplePanel.setWidget(topCommands);
-		topCommands.setSize("100%", "100%");
+		//topCommands.setSize("100%", "100%");
 
 		comboTipo = new ListBox();
 		comboTipo.addItem("Todos");
@@ -56,19 +56,29 @@ public class Locais extends Composite {
 		comboTipo.addItem("Bar");
 		comboTipo.addItem("Parque");
 		topCommands.setWidget(0, 0, comboTipo);
-
+		topCommands.getCellFormatter().addStyleName(0, 0, "topCommandsTipo");
+		
 		txtbxTxtnome = new TextBox();
+		txtbxTxtnome.setWidth(new String("300px"));
 		topCommands.setWidget(0, 1, txtbxTxtnome);
+		topCommands.getCellFormatter().addStyleName(0, 1, "topCommandsNome");
 		txtbxTxtnome.setWidth("300");
 
 		Button btnPesquisar = criarBotaoPesquisar();
 		topCommands.setWidget(0, 2, btnPesquisar);
+		topCommands.getCellFormatter().addStyleName(0, 2, "topCommandsBotoes");
 
+		topCommands.getCellFormatter().addStyleName(0, 3, "topCommandsBotoes");
+		topCommands.getCellFormatter().addStyleName(0, 4, "topCommandsBotoes");
+		topCommands.getCellFormatter().addStyleName(0, 5, "topCommandsBotoes");
+		
 		Button btnAdicionar = criarBotaoAdicionar();
-		topCommands.setWidget(0, 3, btnAdicionar);
+		topCommands.setWidget(0, 6, btnAdicionar);
+		topCommands.getCellFormatter().addStyleName(0, 6, "topCommandsAdicionar");
 
 		Button btnRemover = criarBotaoRemover();
-		topCommands.setWidget(0, 4, btnRemover);
+		topCommands.setWidget(0, 7, btnRemover);
+		topCommands.getCellFormatter().addStyleName(0, 7, "topCommandsRemover");
 
 		SimplePanel bottonPanel = new SimplePanel();
 		flexTable.setWidget(1, 0, bottonPanel);

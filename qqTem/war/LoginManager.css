@@ -327,3 +327,23 @@ a:visited {
   font-style: italic;
   text-align: center;
 }
+
+.topCommandsTipo {
+	width: 110px;
+}
+
+.topCommandsNome {
+	width: 320px;
+}
+
+.topCommandsBotoes {
+	width: 90px;
+}
+
+.topCommandsAdicionar {
+	width: 75px;
+}
+
+.topCommandsRemover {
+	width: 70px;
+}
