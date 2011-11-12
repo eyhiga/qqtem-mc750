@@ -5,6 +5,7 @@ import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
 import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
@@ -27,6 +28,10 @@ public class Locais extends Composite {
 	FlexTable flexTable_1;
 	FlexTable dataTable;
 	
+	ListBox comboTipo;
+	
+	TextBox txtbxTxtnome;
+	
 	public Locais() {
 		
 		flexTable = new FlexTable();
@@ -39,20 +44,96 @@ public class Locais extends Composite {
 		simplePanel.setWidget(flexTable_1);
 		flexTable_1.setSize("100%", "100%");
 		
-		ListBox comboBox = new ListBox();
-		comboBox.addItem("Todos");
-		comboBox.addItem("Restaurante");
-		comboBox.addItem("Hotel");
-		comboBox.addItem("Bar");
-		comboBox.addItem("Parque");
-		flexTable_1.setWidget(0, 0, comboBox);
+		comboTipo = new ListBox();
+		comboTipo.addItem("Todos");
+		comboTipo.addItem("Restaurante");
+		comboTipo.addItem("Hotel");
+		comboTipo.addItem("Bar");
+		comboTipo.addItem("Parque");
+		comboTipo.addItem("Tipo 1");
+		comboTipo.addItem("Tipo 2");
+		comboTipo.addItem("Tipo 3");
+		comboTipo.addItem("Tipo 4");
+		comboTipo.addItem("Tipo 5");
+		flexTable_1.setWidget(0, 0, comboTipo);
 		
-		TextBox textBox = new TextBox();
-		flexTable_1.setWidget(0, 1, textBox);
-		textBox.setWidth("300");
+		txtbxTxtnome = new TextBox();
+		flexTable_1.setWidget(0, 1, txtbxTxtnome);
+		txtbxTxtnome.setWidth("300");
 		
 		Button btnPesquisar = new Button("Pesquisar");
 		flexTable_1.setWidget(0, 2, btnPesquisar);
+		
+		btnPesquisar.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				String tipo = comboTipo.getItemText(comboTipo.getSelectedIndex());
+				String pesquisa = txtbxTxtnome.getText();
+				
+				for(int i=1; i < dataTable.getRowCount(); i ++)
+				{
+					Label nome = (Label) dataTable.getWidget(i, 1);
+					Label labelTipo = (Label) dataTable.getWidget(i, 3);
+					boolean cond = true;
+					
+					if(!tipo.equalsIgnoreCase("Todos"))
+					{
+						if(!labelTipo.getText().equalsIgnoreCase(tipo))
+						{
+							cond = false;
+						}
+						else
+						{
+							if(pesquisa.equalsIgnoreCase(""))
+							{
+								cond = true;
+							}
+							else
+							{
+								if(pesquisa.equalsIgnoreCase(nome.getText()))
+								{
+									cond = true;
+								}
+								else
+								{
+									cond = false;
+								}
+							}
+						}
+					}
+					else
+					{
+						if(pesquisa.equalsIgnoreCase(""))
+						{
+							cond = true;
+						}
+						else
+						{
+							if(pesquisa.equalsIgnoreCase(nome.getText()))
+							{
+								cond = true;
+							}
+							else
+							{
+								cond = false;
+							}
+						}
+					}
+					
+					
+					if(cond == true)
+					{
+						dataTable.getRowFormatter().setVisible(i, true);
+					}
+					else
+					{
+						dataTable.getRowFormatter().setVisible(i, false);
+					}	
+				}
+			}
+		});
 		
 		Button btnAdicionar = new Button("Adicionar");
 		flexTable_1.setWidget(0, 3, btnAdicionar);
