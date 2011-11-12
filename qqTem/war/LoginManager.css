@@ -305,8 +305,13 @@ a:visited {
   margin-bottom:6px;
 }
 
-/* stock list Price and Change fields */
 .watchListNumericColumn {
   text-align: right;
   width:8em;
+}
+
+.tableListHeader {
+  background-color: #2062B8;
+  color: white;
+  font-style: italic;
 }

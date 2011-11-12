@@ -1,5 +1,6 @@
 package com.qqtem.LoginManager.client;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -31,9 +32,13 @@ public class Locais extends Composite {
 	TextBox txtEnderecoPopup;
 	TextBox txtNomePopup;
 	ListBox listTipoPopup;
+	
+	int contRows;
 
 	public Locais() {
 
+		contRows = 0;
+		
 		flexTable = new FlexTable();
 		initWidget(flexTable);
 
@@ -222,15 +227,24 @@ public class Locais extends Composite {
 					{
 						int row = dataTable.getRowCount();
 
+						contRows++;
+						
 						String nome = txtNomePopup.getText();
 						String end = txtEnderecoPopup.getText();
 						String tipo = listTipoPopup.getItemText(listTipoPopup.getSelectedIndex());
 
 						CheckBox chk = new CheckBox();
+								
+						
 						dataTable.setWidget(row, 0, chk);
-						dataTable.setWidget(row, 1, new Label(nome));
-						dataTable.setWidget(row, 2, new Label(end));
-						dataTable.setWidget(row, 3, new Label(tipo));
+						
+						Label n = new Label(nome);
+						Label e = new Label(end);
+						Label t = new Label(tipo);
+						
+						dataTable.setWidget(row, 1, n);
+						dataTable.setWidget(row, 2, e);
+						dataTable.setWidget(row, 3, t);
 						dialog.hide();
 					}
 				});
