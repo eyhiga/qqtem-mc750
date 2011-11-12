@@ -141,6 +141,7 @@ public class Locais extends Composite {
 			public void onClick(ClickEvent event) {
 
 				dialog = new DialogBox();
+				dialog.setTitle("Adicionar local");
 				FlexTable dialogContent = new FlexTable();
 
 				VerticalPanel vertNome = new VerticalPanel();
