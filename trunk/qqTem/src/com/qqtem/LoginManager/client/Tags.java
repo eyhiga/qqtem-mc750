@@ -1,6 +1,5 @@
 package com.qqtem.LoginManager.client;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -8,7 +7,6 @@ import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.ListBox;
-import com.google.gwt.user.client.ui.TextArea;
 import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -217,6 +215,7 @@ public class Tags extends Composite {
 	private Button criarBotaoRemover()
 	{
 		Button btnRemover = new Button("Remover selecionados");
+		btnRemover.setWidth(new String("150px"));
 		
 		btnRemover.addClickHandler(new ClickHandler()
 		{

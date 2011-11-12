@@ -1,6 +1,5 @@
 package com.qqtem.LoginManager.client;
 
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -204,6 +203,7 @@ public class Locais extends Composite {
 	private Button criarBotaoRemover()
 	{
 		Button btnRemover = new Button("Remover selecionados");
+		btnRemover.setWidth(new String("150px"));
 		
 		btnRemover.addClickHandler(new ClickHandler()
 		{
