@@ -4,6 +4,8 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.SimplePager;
 import com.google.gwt.user.cellview.client.SimplePager.TextLocation;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
@@ -15,21 +17,25 @@ import com.google.gwt.widget.client.TextButton;
 import com.google.gwt.user.cellview.client.CellTable;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.cell.client.EditTextCell;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.TextColumn;
 
 public class Locais extends Composite {
-
-	SimplePager pager;
+	
+	FlexTable flexTable;
+	FlexTable flexTable_1;
+	FlexTable dataTable;
 	
 	public Locais() {
 		
-		FlexTable flexTable = new FlexTable();
+		flexTable = new FlexTable();
 		initWidget(flexTable);
 		
 		SimplePanel simplePanel = new SimplePanel();
 		flexTable.setWidget(0, 0, simplePanel);
 		
-		FlexTable flexTable_1 = new FlexTable();
+		flexTable_1 = new FlexTable();
 		simplePanel.setWidget(flexTable_1);
 		flexTable_1.setSize("100%", "100%");
 		
@@ -45,41 +51,83 @@ public class Locais extends Composite {
 		flexTable_1.setWidget(0, 1, textBox);
 		textBox.setWidth("300");
 		
-		Button btnNewButton = new Button("Pesquisar");
-		flexTable_1.setWidget(0, 2, btnNewButton);
+		Button btnPesquisar = new Button("Pesquisar");
+		flexTable_1.setWidget(0, 2, btnPesquisar);
 		
-		Button btnNewButton_1 = new Button("Adicionar");
-		flexTable_1.setWidget(0, 3, btnNewButton_1);
+		Button btnAdicionar = new Button("Adicionar");
+		flexTable_1.setWidget(0, 3, btnAdicionar);
 		
-		Button btnNewButton_2 = new Button("Remover selecionados");
-		flexTable_1.setWidget(0, 4, btnNewButton_2);
+		btnAdicionar.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				int row = dataTable.getRowCount();
+				
+				CheckBox chk = new CheckBox();
+				chk.setName(String.valueOf(row));
+				dataTable.setWidget(row, 0, chk);
+				dataTable.setWidget(row, 1, new Label("Nome " + row));
+				dataTable.setWidget(row, 2, new Label("Endereço " + row));
+				dataTable.setWidget(row, 3, new Label("Tipo " + row));
+				
+				dataTable.getCellFormatter().addStyleName(row, 0, "watchListNumericColumn");
+				dataTable.getCellFormatter().addStyleName(row, 1, "watchListNumericColumn");
+				dataTable.getCellFormatter().addStyleName(row, 2, "watchListNumericColumn");
+				dataTable.getCellFormatter().addStyleName(row, 3, "watchListNumericColumn");
+				
+			}
+		});
+		
+		Button btnRemover = new Button("Remover selecionados");
+		flexTable_1.setWidget(0, 4, btnRemover);
+		
+		btnRemover.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event) {
+				
+				int i=1;
+				CheckBox chk;
+				
+				while((chk = (CheckBox) dataTable.getWidget(i, 0)) != null)
+				{
+					
+					if(chk.getValue())
+					{
+						dataTable.removeRow(i);
+					}
+					else
+					{
+						i++;
+					}
+				}
+				
+			}
+		});
 		
 		SimplePanel simplePanel_1 = new SimplePanel();
 		flexTable.setWidget(1, 0, simplePanel_1);
 		
-		CellTable<Object> cellTable = new CellTable<Object>();
-		simplePanel_1.setWidget(cellTable);
-		cellTable.setSize("100%", "100%");
+		dataTable = new FlexTable();
+		dataTable.setStyleName((String) null);
+		simplePanel_1.setWidget(dataTable);
+		dataTable.setSize("100%", "100%");
 		
-		Column<Object, String> column = new Column<Object, String>(new EditTextCell()) {
-			@Override
-			public String getValue(Object object) {
-				return (String) null;
-			}
-		};
-		cellTable.addColumn(column, "Selecionar");
+		dataTable.setText(0, 0, "Selecionar");
+		dataTable.setText(0, 1, "Nome");
+		dataTable.setText(0, 2, "Endereço");
+		dataTable.setText(0, 3, "Tipo");
 		
-		Column<Object, String> column_1 = new Column<Object, String>(new EditTextCell()) {
-			@Override
-			public String getValue(Object object) {
-				return (String) null;
-			}
-		};
-		cellTable.addColumn(column_1, "Nome");
-		
-		SimplePager.Resources pagerResources = GWT.create(SimplePager.Resources.class);
-	    pager = new SimplePager(TextLocation.CENTER, pagerResources, false, 0, true);
+		dataTable.setCellPadding(6);
+		dataTable.getRowFormatter().addStyleName(0, "tableListHeader");
+		dataTable.addStyleName("watchList");
+		dataTable.getCellFormatter().addStyleName(0, 1, "watchListNumericColumn");
+		dataTable.getCellFormatter().addStyleName(0, 2, "watchListNumericColumn");
+		dataTable.getCellFormatter().addStyleName(0, 3, "watchListNumericColumn");
 		
 	}
 
+	
 }
+
