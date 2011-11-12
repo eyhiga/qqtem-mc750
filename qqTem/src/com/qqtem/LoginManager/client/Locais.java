@@ -325,6 +325,7 @@ public class Locais extends Composite {
 
 				CheckBox chk = new CheckBox();
 
+				dataTable.getCellFormatter().addStyleName(row, 0, "tableListSelecionar");
 				dataTable.setWidget(row, 0, chk);
 
 				Label n = new Label(nome);
