@@ -1,5 +1,6 @@
 package com.qqtem.LoginManager.client;
 
+import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -22,49 +23,57 @@ public class Home extends Composite {
 		verticalPanel_1.add(horizontalPanel);
 		horizontalPanel.setWidth("100%");
 		
-		DecoratorPanel decoratorPanel_1 = new DecoratorPanel();
-		horizontalPanel.add(decoratorPanel_1);
-		decoratorPanel_1.setWidth("100%");
+		CaptionPanel cptnpnlNewPanel = new CaptionPanel("Últimas denúncias");
+		horizontalPanel.add(cptnpnlNewPanel);
 		
 		FlexTable tableDenuncias = new FlexTable();
-		decoratorPanel_1.setWidget(tableDenuncias);
-		tableDenuncias.setWidth("100%");
 		tableDenuncias.setText(0, 0, "Descrição");
 		tableDenuncias.setText(0, 1, "Data");
 		tableDenuncias.setText(0, 2, "Usuário");
 		tableDenuncias.setText(0, 3, "Estado");
+		
+		tableDenuncias.setCellPadding(6);
 		tableDenuncias.getRowFormatter().addStyleName(0, "tableListHeader");
 		tableDenuncias.addStyleName("tableList");
 		
-		DecoratorPanel decoratorPanel_2 = new DecoratorPanel();
-		horizontalPanel.add(decoratorPanel_2);
-		decoratorPanel_2.setWidth("100%");
+		cptnpnlNewPanel.setContentWidget(tableDenuncias);
+		tableDenuncias.setSize("100%", "");
+		
+		CaptionPanel cptnpnlNewPanel_1 = new CaptionPanel("Locais adicionados recentemente");
+		cptnpnlNewPanel_1.setCaptionHTML("Locais adicionados recentemente");
+		horizontalPanel.add(cptnpnlNewPanel_1);
 		
 		FlexTable tableLocais = new FlexTable();
-		decoratorPanel_2.setWidget(tableLocais);
-		tableLocais.setWidth("100%");
 		tableLocais.setText(0, 0, "Nome");
 		tableLocais.setText(0, 1, "Tipo");
+		
+		tableLocais.setCellPadding(6);
 		tableLocais.getRowFormatter().addStyleName(0, "tableListHeader");
 		tableLocais.addStyleName("tableList");
+		
+		cptnpnlNewPanel_1.setContentWidget(tableLocais);
+		tableLocais.setSize("100%", "");
 		
 		VerticalPanel verticalPanel_2 = new VerticalPanel();
 		verticalPanel.add(verticalPanel_2);
 		verticalPanel_2.setWidth("100%");
 		
-		DecoratorPanel decoratorPanel = new DecoratorPanel();
-		verticalPanel_2.add(decoratorPanel);
-		decoratorPanel.setWidth("100%");
+		CaptionPanel cptnpnlNewPanel_2 = new CaptionPanel("Comentários com menor avaliação");
+		verticalPanel_2.add(cptnpnlNewPanel_2);
 		
 		FlexTable tableComentarios = new FlexTable();
-		decoratorPanel.setWidget(tableComentarios);
 		tableComentarios.setText(0, 0, "Classificação");
 		tableComentarios.setText(0, 1, "Usuário");
 		tableComentarios.setText(0, 2, "Local");
 		tableComentarios.setText(0, 3, "Conteúdo");
+		
+		tableComentarios.setCellPadding(6);
 		tableComentarios.getRowFormatter().addStyleName(0, "tableListHeader");
 		tableComentarios.addStyleName("tableList");
-		tableComentarios.setWidth("100%");
+		
+		cptnpnlNewPanel_2.setContentWidget(tableComentarios);
+		tableComentarios.setSize("100%", "");
+	
 
 	}
 	
