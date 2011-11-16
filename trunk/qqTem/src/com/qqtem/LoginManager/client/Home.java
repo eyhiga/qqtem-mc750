@@ -34,6 +34,7 @@ public class Home extends Composite {
 		
 		tableDenuncias.setCellPadding(6);
 		tableDenuncias.getRowFormatter().addStyleName(0, "tableListHeader");
+		tableDenuncias.getCellFormatter().setStyleName(0, 1, "tableListUsuario");
 		tableDenuncias.addStyleName("tableList");
 		
 		cptnpnlNewPanel.setContentWidget(tableDenuncias);
@@ -69,6 +70,10 @@ public class Home extends Composite {
 		
 		tableComentarios.setCellPadding(6);
 		tableComentarios.getRowFormatter().addStyleName(0, "tableListHeader");
+		tableComentarios.getCellFormatter().setStyleName(0, 0, "tableListClassificacao");
+		tableComentarios.getCellFormatter().setStyleName(0, 1, "tableListUsuario");
+		tableComentarios.getCellFormatter().setStyleName(0, 2, "tableListConteudo");
+		tableComentarios.getCellFormatter().setStyleName(0, 3, "tableListConteudo");
 		tableComentarios.addStyleName("tableList");
 		
 		cptnpnlNewPanel_2.setContentWidget(tableComentarios);
