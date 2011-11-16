@@ -117,7 +117,7 @@ public class Home extends Composite {
 		tableComentarios.setWidget(2, 3, new Label("Atendentes muito simpaticos."));
 		
 		tableComentarios.setWidget(3, 0, new Label("-31"));
-		tableComentarios.setWidget(3, 1, new Label("Josúe"));
+		tableComentarios.setWidget(3, 1, new Label("Josué"));
 		tableComentarios.setWidget(3, 2, new Label("Casa Noturna X"));
 		tableComentarios.setWidget(3, 3, new Label("Ótimo acesso e ambiente agradável."));
 		
