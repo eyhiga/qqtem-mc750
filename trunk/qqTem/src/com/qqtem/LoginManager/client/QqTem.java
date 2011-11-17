@@ -35,7 +35,6 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
  */
 public class QqTem implements EntryPoint {
 	private static VerticalPanel verticalPanel;
-	//private static Login login;
 	private static HorizontalPanel horizontalPanel;
 		
 	public void onModuleLoad() {
@@ -49,14 +48,8 @@ public class QqTem implements EntryPoint {
 		//flexTable.setSize("99%", "98%");
 		flexTable.setWidth("100%");
 		
-		//Label label = new Label("< Insira Logo aqui >");
-		//label.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		Image logo = new Image("logo.png");
 		flexTable.setWidget(0, 0, logo);
-		
-		
-		//Label loginLabel = new Label("Login");
-		//flexTable.setWidget(1, 0, loginLabel);
 		
 		verticalPanel = new VerticalPanel();
 		verticalPanel.setStyleName("gwt-VerticalPanel");
@@ -86,11 +79,9 @@ public class QqTem implements EntryPoint {
 		
 		Abas homeAbas = new Abas();
 		
-		//int altura = Window.getClientHeight() - horizontalPanel.getAbsoluteTop();
-		//String height = new String("" + altura);
-		
 		verticalPanel.setSize("100%", "100%");
 		verticalPanel.add(homeAbas);
+		verticalPanel.setBorderWidth(1);
 		
 		Window.setTitle("qqTem - Home");
 		return;
