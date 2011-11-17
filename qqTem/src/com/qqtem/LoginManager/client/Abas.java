@@ -12,19 +12,18 @@ public class Abas extends Composite {
 		initWidget(decoratedTabPanel);
 		decoratedTabPanel.setSize("100%", "100%");
 		
-	    // estas variáveis são os conteúdos de cada aba. (não o texto do nome delas...)
-	    Label denunciasText = new Label("Denúncias");
-	    
+	    // estas variáveis são os conteúdos de cada aba. (não o texto do nome delas...) 
 	    Locais locais = new Locais();
 	    Tags tags = new Tags();
 	    Usuarios usuarios = new Usuarios();
 	    Home home = new Home();
+	    Denuncias denuncias = new Denuncias();
 	    
 	    decoratedTabPanel.add(home, "Home");
 	    decoratedTabPanel.add(tags, "Tags");
 	    decoratedTabPanel.add(locais, "Locais");
 	    decoratedTabPanel.add(usuarios, "Usuários");
-	    decoratedTabPanel.add(denunciasText, "Denúncias");
+	    decoratedTabPanel.add(denuncias, "Denúncias");
 	    
 	    decoratedTabPanel.selectTab(0);
 	}
