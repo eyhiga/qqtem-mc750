@@ -354,3 +354,6 @@ a:visited {
 .tableList-even {
 	background: #eeeeee
 }
+.gwt-Label-error {
+	color: #FF1A00
+}
