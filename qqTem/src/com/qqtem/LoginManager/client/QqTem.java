@@ -29,6 +29,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.HasVerticalAlignment;
+import com.google.gwt.user.client.ui.Hyperlink;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -36,6 +37,7 @@ import com.google.gwt.user.client.ui.HasVerticalAlignment;
 public class QqTem implements EntryPoint {
 	private static VerticalPanel verticalPanel;
 	private static HorizontalPanel horizontalPanel;
+	private static Hyperlink logout;
 		
 	public void onModuleLoad() {
 		RootPanel rootPanel = RootPanel.get();
@@ -51,10 +53,14 @@ public class QqTem implements EntryPoint {
 		Image logo = new Image("logo.png");
 		flexTable.setWidget(0, 0, logo);
 		
+		logout = new Hyperlink("Logout", false, "newHistoryToken");
+		logout.setVisible(false);
+		flexTable.setWidget(1, 0, logout);
+		
 		verticalPanel = new VerticalPanel();
 		verticalPanel.setStyleName("gwt-VerticalPanel");
 		verticalPanel.setBorderWidth(1);
-		flexTable.setWidget(1, 0, verticalPanel);
+		flexTable.setWidget(2, 0, verticalPanel);
 		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		verticalPanel.setVerticalAlignment(VerticalPanel.ALIGN_MIDDLE);
 		verticalPanel.setSize("100px", "100px");
@@ -66,10 +72,11 @@ public class QqTem implements EntryPoint {
 		horizontalPanel.add(login);
 		
 		//flexTable.getCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_CENTER);
-		flexTable.getCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_CENTER);
-		flexTable.getCellFormatter().setVerticalAlignment(1, 0, HasVerticalAlignment.ALIGN_TOP);
 		flexTable.getCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
 		flexTable.getRowFormatter().setVerticalAlign(0, HasVerticalAlignment.ALIGN_TOP);
+		flexTable.getCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_RIGHT);
+		flexTable.getCellFormatter().setHorizontalAlignment(2, 0, HasHorizontalAlignment.ALIGN_CENTER);
+		flexTable.getCellFormatter().setVerticalAlignment(2, 0, HasVerticalAlignment.ALIGN_TOP);
 	}
 	
 	public static void realizaLogin() {
@@ -82,6 +89,8 @@ public class QqTem implements EntryPoint {
 		verticalPanel.setSize("100%", "100%");
 		verticalPanel.add(homeAbas);
 		verticalPanel.setBorderWidth(1);
+		
+		logout.setVisible(true);
 		
 		Window.setTitle("qqTem - Home");
 		return;

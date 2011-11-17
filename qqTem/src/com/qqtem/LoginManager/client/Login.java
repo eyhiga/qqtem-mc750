@@ -20,9 +20,6 @@ public class Login extends Composite {
 		VerticalPanel verticalPanel = new VerticalPanel();
 		initWidget(verticalPanel);
 		
-		//Label lblLogin = new Label("Login");
-		//verticalPanel.add(lblLogin);
-		
 		FlexTable flexTable = new FlexTable();
 		verticalPanel.add(flexTable);
 		
@@ -39,6 +36,7 @@ public class Login extends Composite {
 		flexTable.setWidget(1, 1, textBoxPassword);
 		
 		final Label lblErrorLabel = new Label("");
+		lblErrorLabel.setStyleName("gwt-Label-error");
 		flexTable.setWidget(2, 1, lblErrorLabel);
 		
 		CheckBox chckbxMantenhameLogado = new CheckBox("Mantenha-me logado!");
