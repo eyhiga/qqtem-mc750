@@ -8,8 +8,11 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
 
 public class Denuncias extends Composite {
+	private static FlexTable tabela;
+	private static ListaDenuncias lista;
 
 	public Denuncias() {
+		lista = new ListaDenuncias();
 		
 		VerticalPanel verticalPanel = new VerticalPanel();
 		initWidget(verticalPanel);
@@ -34,7 +37,7 @@ public class Denuncias extends Composite {
 		Button pesquisar = new Button("Pesquisar");
 		flexTable.setWidget(0, 2, pesquisar);
 		
-		FlexTable tabela = new FlexTable();
+		tabela = new FlexTable();
 		tabela.setStyleName("tableList");
 		tabela.getRowFormatter().addStyleName(0, "tableListHeader");
 		verticalPanel.add(tabela);
@@ -49,7 +52,7 @@ public class Denuncias extends Composite {
 		tabela.getCellFormatter().setWidth(0, 2, "50");
 		tabela.getCellFormatter().setWidth(0, 3, "100");
 		
-		tabela.setText(1, 0, "Local marcado inexistente");
+		/*tabela.setText(1, 0, "Local marcado inexistente");
 		tabela.setText(1, 1, "13/10/2011");
 		tabela.setText(1, 2, "João");
 		tabela.setText(1, 3, "Não tratado");
@@ -72,7 +75,27 @@ public class Denuncias extends Composite {
 		tabela.getRowFormatter().addStyleName(1, "tableList-odd");
 		tabela.getRowFormatter().addStyleName(2, "tableList-even");
 		tabela.getRowFormatter().addStyleName(3, "tableList-odd");
-		tabela.getRowFormatter().addStyleName(4, "tableList-even");
+		tabela.getRowFormatter().addStyleName(4, "tableList-even");*/
+		
+		this.preencheTabela();
 	}
 
+	public void preencheTabela() {
+		int i, j;
+		
+		String estilo;
+		
+		for (i = 0; i < lista.getNumDenuncias(); i++) {
+			j = 0;
+			for (j = 0; j < 4; j++) {
+				tabela.setText(i+1, j, lista.getColunaTabela(i, j));
+			}
+			
+			if ((i+1) % 2 != 0) estilo = "tableList-odd";
+			else estilo = "tableList-even";
+			
+			tabela.getRowFormatter().addStyleName(i+1, estilo);
+		}
+	}
+	
 }
