@@ -52,12 +52,15 @@ public class Denuncias extends Composite {
 		tabela.setStyleName("tableList");
 		tabela.getRowFormatter().addStyleName(0, "tableListHeader");
 		verticalPanel.add(tabela);
-		tabela.setWidth("100%");
+		tabela.setSize("100%", "");
 		
 		tabela.setText(0, 0, "Denúncia");
 		tabela.setText(0, 1, "Data");
 		tabela.setText(0, 2, "Usuário");
 		tabela.setText(0, 3, "Estado");
+		
+		tabela.getCellFormatter().setStyleName(0, 1, "tableListUsuario");
+		tabela.addStyleName("tableList");
 
 		tabela.getCellFormatter().setWidth(0, 0, "150");
 		tabela.getCellFormatter().setWidth(0, 1, "50");
@@ -111,7 +114,7 @@ public class Denuncias extends Composite {
 		tabela.setText(linha, coluna, texto);
 	}
 	
-	private static DialogBox criarDialog(final int idDenuncia) {
+	static DialogBox criarDialog(final int idDenuncia) {
 		final DialogBox cxDialogo = new DialogBox();
 		cxDialogo.setTitle("Denúncia");
 		cxDialogo.setGlassEnabled(true);
@@ -160,6 +163,7 @@ public class Denuncias extends Composite {
 				if (!comboBox.getValue(comboBox.getSelectedIndex()).equals(lista.getEstado(idDenuncia))) {
 					lista.mudaEstado(idDenuncia);
 					Denuncias.alteraLinha(linhaId.get(idDenuncia), 3, lista.getEstado(idDenuncia));
+					Home.alteraLinha(linhaId.get(idDenuncia), 3, lista.getEstado(idDenuncia));
 				}
 				
 				cxDialogo.hide();
