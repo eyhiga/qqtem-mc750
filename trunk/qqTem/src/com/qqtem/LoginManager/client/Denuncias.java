@@ -82,7 +82,7 @@ public class Denuncias extends Composite {
 			
 			idLinha.add(i);
 			linhaId.add(i+1);
-			//tabela.setText(i+1, 0, "" + i);
+			
 			for (j = 0; j < 4; j++) {
 				tabela.setText(i+1, j, lista.getColunaTabela(i, j));
 			}			
@@ -101,7 +101,6 @@ public class Denuncias extends Composite {
 				int idDenuncia = idLinha.get(linha-1);
 				
 				dialog = Denuncias.criarDialog(idDenuncia);
-				//dialog.setTitle("" + linha);
 				
 				dialog.center();
 				dialog.show();

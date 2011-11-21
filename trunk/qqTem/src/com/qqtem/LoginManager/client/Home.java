@@ -49,26 +49,6 @@ public class Home extends Composite {
 		tableDenuncias.getCellFormatter().setStyleName(0, 1, "tableListUsuario");
 		tableDenuncias.addStyleName("tableList");
 		
-		/*tableDenuncias.setWidget(1, 0, new Label("Local marcado inexistente"));
-		tableDenuncias.setWidget(1, 1, new Label("13/10/2011"));
-		tableDenuncias.setWidget(1, 2, new Label("João"));
-		tableDenuncias.setWidget(1, 3, new Label("Não tratado"));
-		
-		tableDenuncias.setWidget(2, 0, new Label("Comentário inapropriado"));
-		tableDenuncias.setWidget(2, 1, new Label("13/10/2011"));
-		tableDenuncias.setWidget(2, 2, new Label("Maria"));
-		tableDenuncias.setWidget(2, 3, new Label("Não tratado"));
-		
-		tableDenuncias.setWidget(3, 0, new Label("Comentário abusivo"));
-		tableDenuncias.setWidget(3, 1, new Label("12/10/2011"));
-		tableDenuncias.setWidget(3, 2, new Label("Pedro"));
-		tableDenuncias.setWidget(3, 3, new Label("Não tratado"));
-		
-		tableDenuncias.setWidget(4, 0, new Label("Foto inapropriada"));
-		tableDenuncias.setWidget(4, 1, new Label("12/10/2011"));
-		tableDenuncias.setWidget(4, 2, new Label("Dexter"));
-		tableDenuncias.setWidget(4, 3, new Label("Tratado"));*/
-		
 		preencheTabela();
 		
 		cptnpnlNewPanel.setContentWidget(tableDenuncias);
@@ -94,6 +74,10 @@ public class Home extends Composite {
 		
 		tableLocais.setWidget(3, 0, new Label("Inn"));
 		tableLocais.setWidget(3, 1, new Label("Hotel"));
+		
+		tableLocais.getRowFormatter().addStyleName(1, "tableList-odd");
+		tableLocais.getRowFormatter().addStyleName(2, "tableList-even");
+		tableLocais.getRowFormatter().addStyleName(3, "tableList-odd");
 		
 		cptnpnlNewPanel_1.setContentWidget(tableLocais);
 		tableLocais.setSize("100%", "");
@@ -149,6 +133,14 @@ public class Home extends Composite {
 		tableComentarios.setWidget(6, 2, new Label("Restaurante Meia-Boca"));
 		tableComentarios.setWidget(6, 3, new Label("Meia-boca mesmo."));
 		
+		tableComentarios.getRowFormatter().addStyleName(1, "tableList-odd");
+		tableComentarios.getRowFormatter().addStyleName(2, "tableList-even");
+		tableComentarios.getRowFormatter().addStyleName(3, "tableList-odd");
+		tableComentarios.getRowFormatter().addStyleName(4, "tableList-even");
+		tableComentarios.getRowFormatter().addStyleName(5, "tableList-odd");
+		tableComentarios.getRowFormatter().addStyleName(6, "tableList-even");
+
+		
 		cptnpnlNewPanel_2.setContentWidget(tableComentarios);
 		tableComentarios.setSize("100%", "");
 	
@@ -167,7 +159,7 @@ public class Home extends Composite {
 			
 			idLinha.add(i);
 			linhaId.add(i+1);
-			//tabela.setText(i+1, 0, "" + i);
+			
 			for (j = 0; j < 4; j++) {
 				tableDenuncias.setText(i+1, j, lista.getColunaTabela(i, j));
 			}			
