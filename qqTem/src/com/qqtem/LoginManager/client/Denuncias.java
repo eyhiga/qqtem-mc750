@@ -16,11 +16,19 @@ import com.google.gwt.user.client.ui.TextBox;
 import com.google.gwt.user.client.ui.Button;
 
 public class Denuncias extends Composite {
+	// atributos/elementos/whatever else da tabela de denuncias
 	private static FlexTable tabela;
 	private static ListaDenuncias lista;
 	private static DialogBox dialog;
 	private ArrayList<Integer> idLinha; // idLinha[linha] retorna o id da denuncia presente na linha
 	private static ArrayList<Integer> linhaId; // linhaId[id] retorna a linha que a denuncia de id 'id' está presente
+	
+	// atributos/elementos da pesquisa
+	private static ListBox comboBox;
+	private static TextBox txtboxPesquisa;
+	
+	// variavel auxiliar pra verificar se a dialog deve ser re-popeada :P
+	private static boolean repop = false;
 
 	public Denuncias() {
 		lista = new ListaDenuncias();
@@ -33,19 +41,19 @@ public class Denuncias extends Composite {
 		verticalPanel.add(flexTable);
 		flexTable.setWidth("100%");
 		
-		ListBox comboBox = new ListBox();
+		comboBox = new ListBox();
 		comboBox.addItem("Todos");
-		comboBox.addItem("Não tratados");
-		comboBox.addItem("Tratados");
+		comboBox.addItem("Não tratado");
+		comboBox.addItem("Tratado");
 		flexTable.setWidget(0, 0, comboBox);
 		flexTable.getCellFormatter().setWidth(0, 0, "100");
-		TextBox txtboxPesquisa = new TextBox();
+		txtboxPesquisa = new TextBox();
 		txtboxPesquisa.setWidth("300px");
 		flexTable.setWidget(0, 1, txtboxPesquisa);
 		
 		flexTable.getCellFormatter().setWidth(0, 1, "300px");
 		
-		Button pesquisar = new Button("Pesquisar");
+		Button pesquisar = criaBotaoPesquisar("Pesquisar");
 		flexTable.setWidget(0, 2, pesquisar);
 		
 		tabela = new FlexTable();
@@ -117,6 +125,7 @@ public class Denuncias extends Composite {
 		final DialogBox cxDialogo = new DialogBox();
 		cxDialogo.setTitle("Denúncia");
 		cxDialogo.setGlassEnabled(true);
+		cxDialogo.setAnimationEnabled(true);
 		
 		cxDialogo.setWidth("400px");
 		cxDialogo.setHeight("300 px");
@@ -139,13 +148,25 @@ public class Denuncias extends Composite {
 		conteudo.setWidget(2, 0, data);
 		
 		Hyperlink visualizar = new Hyperlink("Visualizar Informações", false, "newHistoryToken");
+		
+		visualizar.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				Abas.setSelected(lista.getTipo(idDenuncia));
+				Denuncias.repop = true;
+				cxDialogo.hide();
+			}
+		});
+		
 		conteudo.setWidget(3, 0, visualizar);
 		conteudo.getCellFormatter().setHorizontalAlignment(3, 0, HasHorizontalAlignment.ALIGN_CENTER);
 		
 		final ListBox comboBox = new ListBox();
 
 		comboBox.addItem(lista.getEstado(idDenuncia));
-		if (lista.getEstado(idDenuncia) == "Não Tratado") {
+		if (lista.getEstado(idDenuncia).equalsIgnoreCase("Não Tratado")) {
 			comboBox.addItem("Tratado");
 		}
 		else {
@@ -159,7 +180,7 @@ public class Denuncias extends Composite {
 		ok.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				if (!comboBox.getValue(comboBox.getSelectedIndex()).equals(lista.getEstado(idDenuncia))) {
+				if (!comboBox.getValue(comboBox.getSelectedIndex()).equalsIgnoreCase(lista.getEstado(idDenuncia))) {
 					lista.mudaEstado(idDenuncia);
 					Denuncias.alteraLinha(linhaId.get(idDenuncia), 3, lista.getEstado(idDenuncia));
 					Home.alteraLinha(linhaId.get(idDenuncia), 3, lista.getEstado(idDenuncia));
@@ -167,6 +188,7 @@ public class Denuncias extends Composite {
 				
 				cxDialogo.hide();
 				cxDialogo.clear();
+				Denuncias.repop = false;
 			}
 		});
 		
@@ -177,6 +199,7 @@ public class Denuncias extends Composite {
 			public void onClick(ClickEvent event)
 			{
 				cxDialogo.hide();
+				Denuncias.repop = false;
 			}
 		});
 		
@@ -188,6 +211,53 @@ public class Denuncias extends Composite {
 		conteudo.getCellFormatter().setHorizontalAlignment(5, 0, HasHorizontalAlignment.ALIGN_CENTER);
 		
 		return cxDialogo;
+	}
+	
+	private Button criaBotaoPesquisar(String texto) {
+		Button botao = new Button(texto);
+		
+		botao.addClickHandler(new ClickHandler(){
+
+			@Override
+			public void onClick(ClickEvent event) {
+				String tipo = comboBox.getItemText(comboBox.getSelectedIndex());
+				String pesquisa = txtboxPesquisa.getText();
+				
+				int i;
+				boolean visible;
+				for (i = 0; i < lista.getNumDenuncias(); i++) {
+					visible = false;
+					if ((pesquisa.equalsIgnoreCase(lista.getDescricao(i))) || pesquisa.equals("")) {
+						if (!tipo.equalsIgnoreCase("todos")) {
+							if (tipo.equalsIgnoreCase(lista.getEstado(i))) {
+								visible = true;
+							}
+						}
+						else {
+							visible = true;
+						}
+					}
+					
+					tabela.getRowFormatter().setVisible(i+1, visible);
+				}
+				
+			}
+			
+		});
+		
+		return botao;
+	}
+	
+	public static void repopDialog() {
+		if (repop == true) {
+			dialog.center();
+			dialog.show();
+			repop = false;
+		}
+	}
+	
+	public static void setDialog(DialogBox box) {
+		dialog = box;
 	}
 	
 }

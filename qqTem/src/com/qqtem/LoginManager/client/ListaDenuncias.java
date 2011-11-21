@@ -20,10 +20,10 @@ public class ListaDenuncias {
 		tipos = new ArrayList<Integer>();
 		numDenuncias = 0;
 		
-		this.adiciona(0, "Local marcado inexistente", "13/10/2011", "João", false);
-		this.adiciona(1, "Comentário inapropriado", "13/10/2011", "Maria", false);
-		this.adiciona(1, "Comentário abusivo", "12/10/2011", "Pedro", false);
-		this.adiciona(0, "Foto inapropriada", "12/10/2011", "Dexter", true);
+		this.adiciona(2, "Local marcado inexistente", "13/10/2011", "João", false);
+		this.adiciona(0, "Comentário inapropriado", "13/10/2011", "Maria", false);
+		this.adiciona(0, "Comentário abusivo", "12/10/2011", "Pedro", false);
+		this.adiciona(2, "Foto inapropriada", "12/10/2011", "Dexter", true);
 	}
 
 	public void adiciona(int tipo, String descr, String data, String usuario, boolean tratado) {
@@ -119,7 +119,7 @@ public class ListaDenuncias {
 		if (id >= numDenuncias)
 			return;
 		
-		if (getEstado(id) == "Tratado") {
+		if (getEstado(id).equalsIgnoreCase("Tratado")) {
 			estados.set(id, 0);
 			return;
 		}

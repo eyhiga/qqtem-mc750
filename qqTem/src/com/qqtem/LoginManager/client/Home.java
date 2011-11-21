@@ -182,6 +182,8 @@ public class Home extends Composite {
 				dialog.center();
 				dialog.show();
 				
+				Denuncias.setDialog(dialog);
+				
 			}
 		});
 	}
