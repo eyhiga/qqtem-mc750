@@ -1,7 +1,12 @@
 package com.qqtem.LoginManager.client;
 
+import java.util.ArrayList;
+
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.CaptionPanel;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.VerticalPanel;
@@ -9,8 +14,14 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.DecoratorPanel;
 
 public class Home extends Composite {
+	private static FlexTable tableDenuncias;
+	private static DialogBox dialog;
+	private ArrayList<Integer> idLinha; // idLinha[linha] retorna o id da denuncia presente na linha
+	private static ArrayList<Integer> linhaId; // linhaId[id] retorna a linha que a denuncia de id 'id' está presente
+	private static ListaDenuncias lista;
 
 	public Home() {
+		lista = new ListaDenuncias();
 		
 		VerticalPanel verticalPanel = new VerticalPanel();
 		initWidget(verticalPanel);
@@ -27,7 +38,7 @@ public class Home extends Composite {
 		CaptionPanel cptnpnlNewPanel = new CaptionPanel("Últimas denúncias");
 		horizontalPanel.add(cptnpnlNewPanel);
 		
-		FlexTable tableDenuncias = new FlexTable();
+		tableDenuncias = new FlexTable();
 		tableDenuncias.setText(0, 0, "Descrição");
 		tableDenuncias.setText(0, 1, "Data");
 		tableDenuncias.setText(0, 2, "Usuário");
@@ -38,7 +49,7 @@ public class Home extends Composite {
 		tableDenuncias.getCellFormatter().setStyleName(0, 1, "tableListUsuario");
 		tableDenuncias.addStyleName("tableList");
 		
-		tableDenuncias.setWidget(1, 0, new Label("Local marcado inexistente"));
+		/*tableDenuncias.setWidget(1, 0, new Label("Local marcado inexistente"));
 		tableDenuncias.setWidget(1, 1, new Label("13/10/2011"));
 		tableDenuncias.setWidget(1, 2, new Label("João"));
 		tableDenuncias.setWidget(1, 3, new Label("Não tratado"));
@@ -56,7 +67,9 @@ public class Home extends Composite {
 		tableDenuncias.setWidget(4, 0, new Label("Foto inapropriada"));
 		tableDenuncias.setWidget(4, 1, new Label("12/10/2011"));
 		tableDenuncias.setWidget(4, 2, new Label("Dexter"));
-		tableDenuncias.setWidget(4, 3, new Label("Tratado"));
+		tableDenuncias.setWidget(4, 3, new Label("Tratado"));*/
+		
+		preencheTabela();
 		
 		cptnpnlNewPanel.setContentWidget(tableDenuncias);
 		tableDenuncias.setSize("100%", "");
@@ -140,6 +153,50 @@ public class Home extends Composite {
 		tableComentarios.setSize("100%", "");
 	
 
+	}
+	
+	public void preencheTabela() {
+		idLinha = new ArrayList<Integer>();
+		linhaId = new ArrayList<Integer>();
+		int i, j;
+		
+		String estilo;
+		
+		for (i = 0; i < lista.getNumDenuncias(); i++) {
+			j = 0;
+			
+			idLinha.add(i);
+			linhaId.add(i+1);
+			//tabela.setText(i+1, 0, "" + i);
+			for (j = 0; j < 4; j++) {
+				tableDenuncias.setText(i+1, j, lista.getColunaTabela(i, j));
+			}			
+			
+			if ((i+1) % 2 != 0) estilo = "tableList-odd";
+			else estilo = "tableList-even";
+			
+			tableDenuncias.getRowFormatter().addStyleName(i+1, estilo);
+		}
+		
+		tableDenuncias.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				int linha = tableDenuncias.getCellForEvent(event).getRowIndex();
+				if (linha <= 0) return;
+				
+				int idDenuncia = idLinha.get(linha-1);
+				
+				dialog = Denuncias.criarDialog(idDenuncia);
+				//dialog.setTitle("" + linha);
+				
+				dialog.center();
+				dialog.show();
+				
+			}
+		});
+	}
+	
+	public static void alteraLinha(int linha, int coluna, String texto) {
+		tableDenuncias.setText(linha, coluna, texto);
 	}
 	
 }
