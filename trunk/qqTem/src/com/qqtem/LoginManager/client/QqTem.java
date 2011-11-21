@@ -54,6 +54,7 @@ public class QqTem implements EntryPoint {
 		
 		logout = new Hyperlink("Logout", false, "newHistoryToken");
 		logout.setVisible(false);
+		logout.setWidth("45px");
 		
 		logout.addClickHandler(new ClickHandler()
 		{
