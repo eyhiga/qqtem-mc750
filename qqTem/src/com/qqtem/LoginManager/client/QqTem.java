@@ -47,7 +47,6 @@ public class QqTem implements EntryPoint {
 		
 		FlexTable flexTable = new FlexTable();
 		rootPanel.add(flexTable, 0, 0);
-		//flexTable.setSize("99%", "98%");
 		flexTable.setWidth("100%");
 		
 		Image logo = new Image("logo.png");
@@ -55,6 +54,15 @@ public class QqTem implements EntryPoint {
 		
 		logout = new Hyperlink("Logout", false, "newHistoryToken");
 		logout.setVisible(false);
+		
+		logout.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				QqTem.realizaLogout();
+			}
+		});
 		flexTable.setWidget(1, 0, logout);
 		
 		verticalPanel = new VerticalPanel();
@@ -71,7 +79,6 @@ public class QqTem implements EntryPoint {
 		Login login = new Login();
 		horizontalPanel.add(login);
 		
-		//flexTable.getCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_CENTER);
 		flexTable.getCellFormatter().setHorizontalAlignment(0, 0, HasHorizontalAlignment.ALIGN_CENTER);
 		flexTable.getRowFormatter().setVerticalAlign(0, HasVerticalAlignment.ALIGN_TOP);
 		flexTable.getCellFormatter().setHorizontalAlignment(1, 0, HasHorizontalAlignment.ALIGN_RIGHT);
@@ -80,8 +87,6 @@ public class QqTem implements EntryPoint {
 	}
 	
 	public static void realizaLogin() {
-		RootPanel rootPanel = RootPanel.get();
-		
 		verticalPanel.remove(horizontalPanel);
 		
 		Abas homeAbas = new Abas();
@@ -94,5 +99,20 @@ public class QqTem implements EntryPoint {
 		
 		Window.setTitle("qqTem - Home");
 		return;
+	}
+	
+	public static void realizaLogout() {
+		logout.setVisible(false);
+		
+		verticalPanel.remove(0);
+		horizontalPanel.remove(0);
+		verticalPanel.add(horizontalPanel);
+		verticalPanel.setSize("100px", "100px");
+		
+		Login login = new Login();
+		horizontalPanel.add(login);
+		
+		Window.setTitle("qqTem - Login");
+		
 	}
 }
