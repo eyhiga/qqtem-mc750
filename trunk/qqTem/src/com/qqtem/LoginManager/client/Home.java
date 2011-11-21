@@ -186,7 +186,6 @@ public class Home extends Composite {
 				int idDenuncia = idLinha.get(linha-1);
 				
 				dialog = Denuncias.criarDialog(idDenuncia);
-				//dialog.setTitle("" + linha);
 				
 				dialog.center();
 				dialog.show();
