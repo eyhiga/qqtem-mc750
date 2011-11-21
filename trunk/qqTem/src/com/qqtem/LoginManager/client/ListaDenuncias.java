@@ -115,4 +115,18 @@ public class ListaDenuncias {
 		}
 	}
 	
+	public void mudaEstado(int id) {
+		if (id >= numDenuncias)
+			return;
+		
+		if (getEstado(id) == "Tratado") {
+			estados.set(id, 0);
+			return;
+		}
+		else {
+			estados.set(id, 1);
+			return;
+		}
+	}
+	
 }

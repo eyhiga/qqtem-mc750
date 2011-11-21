@@ -19,7 +19,8 @@ public class Denuncias extends Composite {
 	private static FlexTable tabela;
 	private static ListaDenuncias lista;
 	private static DialogBox dialog;
-	private ArrayList<Integer> idLinha;
+	private ArrayList<Integer> idLinha; // idLinha[linha] retorna o id da denuncia presente na linha
+	private static ArrayList<Integer> linhaId; // linhaId[id] retorna a linha que a denuncia de id 'id' está presente
 
 	public Denuncias() {
 		lista = new ListaDenuncias();
@@ -53,12 +54,11 @@ public class Denuncias extends Composite {
 		verticalPanel.add(tabela);
 		tabela.setWidth("100%");
 		
-		//tabela.setText(0, 0, "Identificador");
 		tabela.setText(0, 0, "Denúncia");
 		tabela.setText(0, 1, "Data");
 		tabela.setText(0, 2, "Usuário");
 		tabela.setText(0, 3, "Estado");
-		//tabela.getCellFormatter().setWidth(0, 0, "50");
+
 		tabela.getCellFormatter().setWidth(0, 0, "150");
 		tabela.getCellFormatter().setWidth(0, 1, "50");
 		tabela.getCellFormatter().setWidth(0, 2, "50");
@@ -69,50 +69,52 @@ public class Denuncias extends Composite {
 
 	public void preencheTabela() {
 		idLinha = new ArrayList<Integer>();
+		linhaId = new ArrayList<Integer>();
 		int i, j;
 		
 		String estilo;
-		
-		//TableListener tbListener = new TableListener();
 		
 		for (i = 0; i < lista.getNumDenuncias(); i++) {
 			j = 0;
 			
 			idLinha.add(i);
-			
+			linhaId.add(i+1);
 			//tabela.setText(i+1, 0, "" + i);
 			for (j = 0; j < 4; j++) {
 				tabela.setText(i+1, j, lista.getColunaTabela(i, j));
-				
-				//tabela.addTableListener(null)
-			}
-			
-			tabela.addClickHandler(new ClickHandler() {
-				public void onClick(ClickEvent event) {
-					int linha = tabela.getCellForEvent(event).getRowIndex();
-					if (linha <= 0) return;
-					
-					int idDenuncia = idLinha.get(linha-1);
-					
-					dialog = Denuncias.criarDialog(idDenuncia);
-					
-					dialog.center();
-					dialog.show();
-					
-				}
-			});
-			
+			}			
 			
 			if ((i+1) % 2 != 0) estilo = "tableList-odd";
 			else estilo = "tableList-even";
 			
 			tabela.getRowFormatter().addStyleName(i+1, estilo);
 		}
+		
+		tabela.addClickHandler(new ClickHandler() {
+			public void onClick(ClickEvent event) {
+				int linha = tabela.getCellForEvent(event).getRowIndex();
+				if (linha <= 0) return;
+				
+				int idDenuncia = idLinha.get(linha-1);
+				
+				dialog = Denuncias.criarDialog(idDenuncia);
+				//dialog.setTitle("" + linha);
+				
+				dialog.center();
+				dialog.show();
+				
+			}
+		});
 	}
 	
-	private static DialogBox criarDialog(int idDenuncia) {
-		DialogBox cxDialogo = new DialogBox();
+	public static void alteraLinha(int linha, int coluna, String texto) {
+		tabela.setText(linha, coluna, texto);
+	}
+	
+	private static DialogBox criarDialog(final int idDenuncia) {
+		final DialogBox cxDialogo = new DialogBox();
 		cxDialogo.setTitle("Denúncia");
+		cxDialogo.setGlassEnabled(true);
 		
 		cxDialogo.setWidth("400px");
 		cxDialogo.setHeight("300 px");
@@ -138,9 +140,16 @@ public class Denuncias extends Composite {
 		conteudo.setWidget(3, 0, visualizar);
 		conteudo.getCellFormatter().setHorizontalAlignment(3, 0, HasHorizontalAlignment.ALIGN_CENTER);
 		
-		ListBox comboBox = new ListBox();
-		comboBox.addItem("Não Tratado");
-		comboBox.addItem("Tratado");
+		final ListBox comboBox = new ListBox();
+
+		comboBox.addItem(lista.getEstado(idDenuncia));
+		if (lista.getEstado(idDenuncia) == "Não Tratado") {
+			comboBox.addItem("Tratado");
+		}
+		else {
+			comboBox.addItem("Não Tratado");
+		}
+		
 		conteudo.setWidget(4, 0, comboBox);
 		conteudo.getCellFormatter().setHorizontalAlignment(4, 0, HasHorizontalAlignment.ALIGN_CENTER);
 		
@@ -148,7 +157,13 @@ public class Denuncias extends Composite {
 		ok.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				dialog.hide();
+				if (!comboBox.getValue(comboBox.getSelectedIndex()).equals(lista.getEstado(idDenuncia))) {
+					lista.mudaEstado(idDenuncia);
+					Denuncias.alteraLinha(linhaId.get(idDenuncia), 3, lista.getEstado(idDenuncia));
+				}
+				
+				cxDialogo.hide();
+				cxDialogo.clear();
 			}
 		});
 		
@@ -158,7 +173,7 @@ public class Denuncias extends Composite {
 			@Override
 			public void onClick(ClickEvent event)
 			{
-				dialog.hide();
+				cxDialogo.hide();
 			}
 		});
 		
