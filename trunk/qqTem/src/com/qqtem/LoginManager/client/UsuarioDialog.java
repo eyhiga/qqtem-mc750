@@ -3,6 +3,7 @@ package com.qqtem.LoginManager.client;
 import javax.swing.JOptionPane;
 
 import com.gargoylesoftware.htmlunit.javascript.host.Popup;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.Label;
@@ -106,6 +107,8 @@ public class UsuarioDialog extends DialogBox {
 				
 				usuarios.editUser(editingUser);
 				hide();
+				Window.alert("Usuário salvo com sucesso.");
+				
 			}
 		});
 		horizontalPanel_1.add(btnSalvar);
@@ -121,6 +124,7 @@ public class UsuarioDialog extends DialogBox {
 		rbState[0] = rdbtnNormal;
 		rbState[1] = rdbtnAdmin;
 		rbState[2] = rdbtnBanido;
+		
 	}
 	
 	void showUser(UserData user){

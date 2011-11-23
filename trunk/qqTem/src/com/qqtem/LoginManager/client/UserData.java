@@ -11,6 +11,7 @@ public class UserData {
 		this.name = name;
 		this.login = login;
 		this.state = state;
+		this.id = id;
 		this.setMale(male);
 	}
 	
