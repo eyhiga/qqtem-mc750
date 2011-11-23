@@ -3,7 +3,9 @@ package com.qqtem.LoginManager.client;
 import java.util.Vector;
 
 import com.google.gwt.cell.client.Cell;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.DialogBox;
 import com.google.gwt.user.client.ui.FlexTable;
 import com.google.gwt.user.client.ui.AbsolutePanel;
 import com.google.gwt.user.client.ui.HorizontalPanel;
@@ -29,11 +31,13 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.ListBox;
 import com.ibm.icu.impl.LocaleDisplayNamesImpl.DataTable;
+import com.google.gwt.user.client.ui.Label;
 
 public class Usuarios extends Composite {
 	private Vector<UserData> usuarios;
 	private FlexTable dataTable;
 	private UsuarioDialog dialog;
+	private Thread dlabel;
 	
 	public Usuarios() {
 		dialog = new UsuarioDialog(this);
@@ -58,8 +62,9 @@ public class Usuarios extends Composite {
 		horizontalPanel.add(btnPesquisar);
 		flexTable.getCellFormatter().setVerticalAlignment(0, 0, HasVerticalAlignment.ALIGN_TOP);
 		
+		
 		dataTable = new FlexTable();
-		flexTable.setWidget(1, 0, dataTable);
+		flexTable.setWidget(2, 0, dataTable);
 		dataTable.setSize("100%", "100%");
 		
 		dataTable.setText(0, 0, "Nome");
