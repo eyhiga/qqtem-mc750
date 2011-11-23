@@ -37,7 +37,9 @@ public class Usuarios extends Composite {
 	private Vector<UserData> usuarios;
 	private FlexTable dataTable;
 	private UsuarioDialog dialog;
-	private Thread dlabel;
+	private TextBox textBox;
+	private ListBox comboBox_1;
+	private ListBox comboBox;
 	
 	public Usuarios() {
 		dialog = new UsuarioDialog(this);
@@ -47,35 +49,68 @@ public class Usuarios extends Composite {
 		initWidget(flexTable);
 		
 		HorizontalPanel horizontalPanel = new HorizontalPanel();
+		horizontalPanel.setSpacing(10);
 		flexTable.setWidget(0, 0, horizontalPanel);
 		
-		ListBox comboBox = new ListBox();
+		Label lblSexo = new Label("Sexo:");
+		horizontalPanel.add(lblSexo);
+		horizontalPanel.setCellVerticalAlignment(lblSexo, HasVerticalAlignment.ALIGN_MIDDLE);
+		
+		comboBox = new ListBox();
 		horizontalPanel.add(comboBox);
-		comboBox.addItem("Todos");
+		comboBox.addItem("Qualquer");
+		comboBox.addItem("Masculino");
+		comboBox.addItem("Feminino");
 		comboBox.setWidth("98px");
 		
-		TextBox textBox = new TextBox();
+		Label lblEstado = new Label("Estado:");
+		horizontalPanel.add(lblEstado);
+		horizontalPanel.setCellVerticalAlignment(lblEstado, HasVerticalAlignment.ALIGN_MIDDLE);
+		
+		
+		comboBox_1 = new ListBox();
+		horizontalPanel.add(comboBox_1);
+		comboBox_1.addItem("Qualquer");
+		comboBox_1.addItem("Normal");
+		comboBox_1.addItem("Administrador");
+		comboBox_1.addItem("Banido");
+		
+		
+		textBox = new TextBox();
 		horizontalPanel.add(textBox);
 		textBox.setWidth("356px");
 		
 		Button btnPesquisar = new Button("Pesquisar");
 		horizontalPanel.add(btnPesquisar);
 		flexTable.getCellFormatter().setVerticalAlignment(0, 0, HasVerticalAlignment.ALIGN_TOP);
-		
+		btnPesquisar.addClickHandler(new ClickHandler() {
+			@Override
+			public void onClick(ClickEvent event) {
+				dataTable.removeAllRows();
+				createTableHeaders();
+				String pattern = textBox.getText();
+				boolean anySex = comboBox.getSelectedIndex()==0;
+				boolean male = comboBox.getSelectedIndex()==1;
+				int state = comboBox_1.getSelectedIndex()-1;
+				
+				for (UserData user : usuarios) {
+					if(user.getName().indexOf(pattern)<0 && user.getLogin().indexOf(pattern)<0)
+						continue;
+					if(user.isMale()!=male && !anySex)
+						continue;
+					if(state!=-1 && user.getState()!=state)
+						continue;
+					
+					addUserToTable(user);
+				}
+			}
+		});
 		
 		dataTable = new FlexTable();
 		flexTable.setWidget(2, 0, dataTable);
 		dataTable.setSize("100%", "100%");
 		
-		dataTable.setText(0, 0, "Nome");
-		dataTable.setText(0, 1, "Login");
-		dataTable.setText(0, 2, "Sexo");
-		dataTable.setText(0, 3, "Estado");
-		
-		dataTable.getCellFormatter().addStyleName(0,0,"tableListHeader");
-		dataTable.getCellFormatter().addStyleName(0,1,"tableListHeader");
-		dataTable.getCellFormatter().addStyleName(0,2,"tableListHeader");
-		dataTable.getCellFormatter().addStyleName(0,3,"tableListHeader");
+		createTableHeaders();
 		
 		adicionaUsuario("Joao", "jojo22", true , UserData.NORMAL);
 		adicionaUsuario("gangster", "gang1337", true ,UserData.BANNED);
@@ -89,31 +124,35 @@ public class Usuarios extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				int index = dataTable.getCellForEvent(event).getRowIndex();
-				if(index>0){
-					openUserDialog(index-1);
+				UserData user=getUserByLogin(dataTable.getText(index, 1));
+				if (user!=null){
+					openUserDialog(user);
 				}
 			}
-
 		});
 		
 	}
 	
-	private void openUserDialog(int index){
-		System.out.println(usuarios.elementAt(index).getId());
-		dialog.showUser(usuarios.elementAt(index));
+	private void openUserDialog(UserData user){
+		dialog.showUser(user);
 		dialog.center();
 	}
+	
 	public void adicionaUsuario(String nome, String login,boolean male,int estado){
 		usuarios.add(new UserData(usuarios.size(), nome, login,male, estado));
+		addUserToTable(usuarios.lastElement());
 		
-		System.out.println(usuarios.lastElement().getId());
-		
-		dataTable.setText(usuarios.size(), 0, nome);
-		dataTable.setText(usuarios.size(), 1, login);
-		dataTable.setText(usuarios.size(), 2, male? "Masculino":"Feminino");
-		dataTable.setText(usuarios.size(), 3, getUserStateString(estado));
+
+	}
+	
+	public void addUserToTable(UserData usr){
+		int row =dataTable.getRowCount();
+		dataTable.setText(row , 0, usr.getName());
+		dataTable.setText(row , 1, usr.getLogin());
+		dataTable.setText(row , 2, usr.isMale()? "Masculino":"Feminino");
+		dataTable.setText(row , 3, getUserStateString(usr.getState()));
 		dataTable.getRowFormatter().addStyleName(
-				usuarios.size(), usuarios.size()%2==0? "tableList-odd":"tableList-even");
+				row, row%2==0? "tableList-odd":"tableList-even");
 	}
 	
 	public String getUserStateString(int state){
@@ -134,12 +173,31 @@ public class Usuarios extends Composite {
 	public void editUser(UserData editingUser) {
 		int id = editingUser.getId();
 		
-//		System.out.println(id);
 		dataTable.setText(id+1, 0, editingUser.getName());
 		dataTable.setText(id+1, 1, editingUser.getLogin());
 		dataTable.setText(id+1, 2, editingUser.isMale()? "Masculino":"Feminino");
 		dataTable.setText(id+1, 3, getUserStateString(editingUser.getState()));
 		
+	}
+	
+	public UserData getUserByLogin(String login){
+		for (UserData user : usuarios) {
+			if(user.getLogin().compareTo(login)==0)
+				return user;
+		}
+		return null;
+	}
+	
+	public void createTableHeaders(){
+		dataTable.setText(0, 0, "Nome");
+		dataTable.setText(0, 1, "Login");
+		dataTable.setText(0, 2, "Sexo");
+		dataTable.setText(0, 3, "Estado");
+		
+		dataTable.getCellFormatter().addStyleName(0,0,"tableListHeader");
+		dataTable.getCellFormatter().addStyleName(0,1,"tableListHeader");
+		dataTable.getCellFormatter().addStyleName(0,2,"tableListHeader");
+		dataTable.getCellFormatter().addStyleName(0,3,"tableListHeader");
 	}
 	
 	

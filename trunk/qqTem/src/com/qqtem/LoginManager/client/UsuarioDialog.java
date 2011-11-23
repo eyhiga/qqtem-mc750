@@ -44,19 +44,19 @@ public class UsuarioDialog extends DialogBox {
 		setWidget(flexTable);
 		flexTable.setSize("100%", "100%");
 		
-		Label lblLogin = new Label("Login");
-		flexTable.setWidget(0, 0, lblLogin);
-		
-		txtbxLogin = new TextBox();
-		txtbxLogin.setText("Login");
-		flexTable.setWidget(0, 1, txtbxLogin);
-		
 		Label lblNome = new Label("Nome");
-		flexTable.setWidget(1, 0, lblNome);
+		flexTable.setWidget(0, 0, lblNome);
 		
 		txtbxNome = new TextBox();
 		txtbxNome.setText("Nome");
-		flexTable.setWidget(1, 1, txtbxNome);
+		flexTable.setWidget(0, 1, txtbxNome);
+		
+		Label lblLogin = new Label("Login");
+		flexTable.setWidget(1, 0, lblLogin);
+		
+		txtbxLogin = new TextBox();
+		txtbxLogin.setText("Login");
+		flexTable.setWidget(1, 1, txtbxLogin);
 		
 		Label lblSexo = new Label("Sexo");
 		flexTable.setWidget(2, 0, lblSexo);
@@ -95,6 +95,11 @@ public class UsuarioDialog extends DialogBox {
 		Button btnSalvar = new Button("Salvar");
 		btnSalvar.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
+				UserData temp = usuarios.getUserByLogin(txtbxLogin.getText());
+				if(temp!=editingUser && temp!=null){
+					Window.alert("Login repetido");
+					return;
+				}
 				editingUser.setLogin(txtbxLogin.getText());
 				editingUser.setName(txtbxNome.getText());
 				editingUser.setMale(rdbtnMasculino.getValue());
@@ -106,6 +111,7 @@ public class UsuarioDialog extends DialogBox {
 					editingUser.setState(UserData.NORMAL);
 				
 				usuarios.editUser(editingUser);
+				
 				hide();
 				Window.alert("Usuário salvo com sucesso.");
 				
