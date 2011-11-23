@@ -311,6 +311,13 @@ a:visited {
   	margin-bottom:6px;
 }
 
+.tableListClassificacao {
+	width: 20px;
+	text-align: center;
+  	padding: 2px;
+  	margin-bottom:6px;
+}
+
 .tableListTipo {
 	width: 150px;
 }
@@ -321,6 +328,14 @@ a:visited {
 
 .tableListEndereco {
 	width: 300px;
+}
+
+.tableListConteudo {
+	width: 300px;
+}
+
+.tableListUsuario {
+	width: 150px;
 }
 
 .tableListHeader {
@@ -347,7 +362,7 @@ a:visited {
 }
 
 .topCommandsRemover {
-	width: 70px;
+	width: 200px;
 }
 .tableList-odd {
 }

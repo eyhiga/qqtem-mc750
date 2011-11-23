@@ -1,5 +1,6 @@
 package com.qqtem.LoginManager.client;
 
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
@@ -90,6 +91,7 @@ public class Locais extends Composite {
 		dataTable.setText(0, 1, "Nome");
 		dataTable.setText(0, 2, "Endereço");
 		dataTable.setText(0, 3, "Tipo");
+		dataTable.setText(0, 4, "Editar");
 
 		dataTable.setCellPadding(6);
 		dataTable.getRowFormatter().addStyleName(0, "tableListHeader");
@@ -98,6 +100,7 @@ public class Locais extends Composite {
 		dataTable.getCellFormatter().addStyleName(0, 1, "tableListNome");
 		dataTable.getCellFormatter().addStyleName(0, 2, "tableListEndereco");
 		dataTable.getCellFormatter().addStyleName(0, 3, "tableListTipo");
+		dataTable.getCellFormatter().addStyleName(0, 4, "tableListSelecionar");
 
 
 	}
@@ -322,19 +325,32 @@ public class Locais extends Composite {
 				String nome = txtNomePopup.getText();
 				String end = txtEnderecoPopup.getText();
 				String tipo = listTipoPopup.getItemText(listTipoPopup.getSelectedIndex());
+				final Button editar = new Button("Editar");
 
 				CheckBox chk = new CheckBox();
 
 				dataTable.getCellFormatter().addStyleName(row, 0, "tableListSelecionar");
 				dataTable.setWidget(row, 0, chk);
 
-				Label n = new Label(nome);
-				Label e = new Label(end);
-				Label t = new Label(tipo);
+				final Label n = new Label(nome);
+				final Label e = new Label(end);
+				final Label t = new Label(tipo);
 
 				dataTable.setWidget(row, 1, n);
 				dataTable.setWidget(row, 2, e);
 				dataTable.setWidget(row, 3, t);
+				dataTable.setWidget(row, 4, editar);
+				
+				editar.addClickHandler(new ClickHandler()
+				{
+					
+					public void onClick(ClickEvent event)
+					{
+						editarLocal(n, e ,t);
+					}
+					
+				});
+				
 				dialog.hide();
 			}
 		});
@@ -357,6 +373,135 @@ public class Locais extends Composite {
 		diag.setWidget(dialogContent);
 
 		return diag;
+		
+	}
+
+	private void editarLocal(final Label nome, final Label end, final Label tipo)
+	{
+		
+		dialog.setTitle("Adicionar local");
+		FlexTable dialogContent = new FlexTable();
+
+		VerticalPanel vertNome = new VerticalPanel();
+		dialogContent.setWidget(0, 0, vertNome);
+
+		FlexTable flexNome = new FlexTable();
+		vertNome.add(flexNome);
+
+		Label lblNome = new Label("Nome: ");
+		lblNome.setWidth(new String("70px"));
+		lblNome.setHorizontalAlignment(Label.ALIGN_RIGHT);
+		flexNome.setWidget(0, 1, lblNome);
+		txtNomePopup = new TextBox();
+		txtNomePopup.setText(nome.getText());
+		txtNomePopup.setName("txtNome");
+		txtNomePopup.setWidth(new String("200px"));
+		flexNome.setWidget(0, 2, txtNomePopup);
+
+		VerticalPanel vertEndereco = new VerticalPanel();
+		dialogContent.setWidget(1, 0, vertEndereco);
+
+		FlexTable flexEndereco = new FlexTable();
+		vertNome.add(flexEndereco);
+
+		Label lblEndereco = new Label("Endereço: ");
+		lblEndereco.setWidth(new String("70px"));
+		lblEndereco.setHorizontalAlignment(Label.ALIGN_RIGHT);
+		flexEndereco.setWidget(0, 1, lblEndereco);
+		txtEnderecoPopup = new TextBox();
+		txtEnderecoPopup.setText(end.getText());
+		txtEnderecoPopup.setName("txtNome");
+		txtEnderecoPopup.setWidth(new String("200px"));
+		flexEndereco.setWidget(0, 2, txtEnderecoPopup);
+
+		VerticalPanel vertTipo = new VerticalPanel();
+		dialogContent.setWidget(2, 0, vertTipo);
+
+		FlexTable flexTipo = new FlexTable();
+		vertTipo.add(flexTipo);
+
+		Label lblTipo = new Label("Tipo: ");
+		lblTipo.setWidth(new String("70px"));
+		lblTipo.setHorizontalAlignment(Label.ALIGN_RIGHT);
+		flexTipo.setWidget(0, 1, lblTipo);
+		listTipoPopup = new ListBox();
+		listTipoPopup.setWidth(new String("200px"));
+		listTipoPopup.setName("listTipoPopup");
+		listTipoPopup.addItem("Restaurante");
+		listTipoPopup.addItem("Hotel");
+		listTipoPopup.addItem("Bar");
+		listTipoPopup.addItem("Parque");
+		
+		int index=0;
+		int i;
+		int total = listTipoPopup.getItemCount();
+		//Window.alert(tipo.getText());
+		String t = tipo.getText();
+		for(i=0; i<total; i++)
+		{
+			String selected = listTipoPopup.getItemText(i);
+			//Window.alert(String.valueOf(selected.equalsIgnoreCase(tipo.getText())));
+			//Window.alert(selected);
+			if(selected.equalsIgnoreCase(tipo.getText()))
+			{
+				index=i;
+			}
+		}
+		listTipoPopup.setSelectedIndex(index);
+		flexTipo.setWidget(0, 2, listTipoPopup);
+
+		VerticalPanel vertDesc = new VerticalPanel();
+		dialogContent.setWidget(3, 0, vertDesc);
+
+		FlexTable flexDesc = new FlexTable();
+		vertDesc.add(flexDesc);
+		Label lblDesc = new Label("Descrição: ");
+		lblDesc.setWidth(new String("70px"));
+		lblDesc.setHorizontalAlignment(Label.ALIGN_RIGHT);
+		flexDesc.setWidget(0, 0, lblDesc);
+		TextArea txtDesc = new TextArea();
+		txtDesc.setWidth(new String("270px"));
+		flexDesc.setWidget(1, 0, txtDesc);
+
+		VerticalPanel vertBotoes = new VerticalPanel();
+		dialogContent.setWidget(4, 0, vertBotoes);
+
+		FlexTable flexBotoes = new FlexTable();
+		vertBotoes.add(flexBotoes);
+		Button btnAddFotos = new Button("Adicionar fotos");
+		Button btnSalvar = new Button("Salvar");
+
+		btnSalvar.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+			
+				nome.setText(txtNomePopup.getText());
+				end.setText(txtEnderecoPopup.getText());
+				tipo.setText(listTipoPopup.getItemText(listTipoPopup.getSelectedIndex()));
+				dialog.hide();
+			}
+		});
+
+		Button btnCancelar = new Button("Cancelar");
+
+		btnCancelar.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				dialog.hide();
+			}
+		});
+
+		flexBotoes.setWidget(0, 0, btnAddFotos);
+		flexBotoes.setWidget(0, 5, btnSalvar);
+		flexBotoes.setWidget(0, 6, btnCancelar);
+
+		dialog.setWidget(dialogContent);
+		dialog.show();
+
 		
 	}
 	
