@@ -91,6 +91,7 @@ public class Locais extends Composite {
 		dataTable.setText(0, 1, "Nome");
 		dataTable.setText(0, 2, "Endereço");
 		dataTable.setText(0, 3, "Tipo");
+		dataTable.setText(0, 4, "Editar");
 
 		dataTable.setCellPadding(6);
 		dataTable.getRowFormatter().addStyleName(0, "tableListHeader");
@@ -99,17 +100,8 @@ public class Locais extends Composite {
 		dataTable.getCellFormatter().addStyleName(0, 1, "tableListNome");
 		dataTable.getCellFormatter().addStyleName(0, 2, "tableListEndereco");
 		dataTable.getCellFormatter().addStyleName(0, 3, "tableListTipo");
+		dataTable.getCellFormatter().addStyleName(0, 4, "tableListSelecionar");
 
-		dataTable.addClickHandler(new ClickHandler()
-		{
-			public void onClick(ClickEvent event)
-			{
-				int linha = dataTable.getCellForEvent(event).getRowIndex();
-				
-				editarLocal(linha);
-				
-			}
-		});
 
 	}
 
@@ -338,6 +330,7 @@ public class Locais extends Composite {
 				CheckBox chk = new CheckBox();
 
 				dataTable.getCellFormatter().addStyleName(row, 0, "tableListSelecionar");
+				dataTable.getCellFormatter().addStyleName(row, 4, "tableListSelecionar");
 				dataTable.setWidget(row, 0, chk);
 
 				final Label n = new Label(nome);
@@ -347,14 +340,14 @@ public class Locais extends Composite {
 				dataTable.setWidget(row, 1, n);
 				dataTable.setWidget(row, 2, e);
 				dataTable.setWidget(row, 3, t);
-				//dataTable.setWidget(row, 4, editar);
+				dataTable.setWidget(row, 4, editar);
 				
 				editar.addClickHandler(new ClickHandler()
 				{
 					
 					public void onClick(ClickEvent event)
 					{
-						//editarLocal(n, e ,t);
+						editarLocal(n, e ,t);
 					}
 					
 				});
@@ -384,11 +377,8 @@ public class Locais extends Composite {
 		
 	}
 
-	private void editarLocal(int linha)
+	private void editarLocal(final Label nome, final Label end, final Label tipo)
 	{
-		final Label nome = (Label) dataTable.getWidget(linha, 1);
-		final Label end = (Label) dataTable.getWidget(linha, 2);
-		final Label tipo = (Label) dataTable.getWidget(linha, 3);
 		
 		dialog.setTitle("Adicionar local");
 		FlexTable dialogContent = new FlexTable();

@@ -86,6 +86,7 @@ public class Tags extends Composite {
 		dataTable.setText(0, 0, "Selecionar");
 		dataTable.setText(0, 1, "Nome");
 		dataTable.setText(0, 2, "Visível");
+		dataTable.setText(0, 3, "Editar");
 
 		dataTable.setCellPadding(6);
 		dataTable.getRowFormatter().addStyleName(0, "tableListHeader");
@@ -93,6 +94,7 @@ public class Tags extends Composite {
 		dataTable.getCellFormatter().addStyleName(0, 0, "tableListSelecionar");
 		dataTable.getCellFormatter().addStyleName(0, 1, "tableListNome");
 		dataTable.getCellFormatter().addStyleName(0, 2, "tableListSelecionar");
+		dataTable.getCellFormatter().addStyleName(0, 3, "tableListSelecionar");
 
 
 	}
@@ -296,18 +298,28 @@ public class Tags extends Composite {
 				contRows++;
 
 				String nome = txtNomePopup.getText();
+				Button btnEditar = new Button("Editar");
 
 				CheckBox chk = new CheckBox();
 
 				dataTable.getCellFormatter().addStyleName(row, 0, "tableListSelecionar");
 				dataTable.setWidget(row, 0, chk);
 
-				Label n = new Label(nome);
+				final Label n = new Label(nome);
 				CheckBox c = new CheckBox();
 				c.setValue(true);
 
 				dataTable.setWidget(row, 1, n);
 				dataTable.setWidget(row, 2, c);
+				dataTable.setWidget(row, 3, btnEditar);
+				
+				btnEditar.addClickHandler(new ClickHandler()
+				{
+					public void onClick(ClickEvent event)
+					{
+						editarTag(n);
+					}
+				});
 				
 				dataTable.getCellFormatter().addStyleName(row, 2, "tableListSelecionar");
 				
@@ -333,6 +345,78 @@ public class Tags extends Composite {
 
 		return diag;
 		
+	}
+	
+	public void editarTag(final Label nome)
+	{
+		dialog.setTitle("Adicionar tag");
+		FlexTable dialogContent = new FlexTable();
+
+		VerticalPanel vertNome = new VerticalPanel();
+		dialogContent.setWidget(0, 0, vertNome);
+
+		FlexTable flexNome = new FlexTable();
+		vertNome.add(flexNome);
+
+		Label lblNome = new Label("Nome: ");
+		lblNome.setWidth(new String("70px"));
+		lblNome.setHorizontalAlignment(Label.ALIGN_RIGHT);
+		flexNome.setWidget(0, 1, lblNome);
+		txtNomePopup = new TextBox();
+		txtNomePopup.setText(nome.getText());
+		txtNomePopup.setName("txtNome");
+		txtNomePopup.setWidth(new String("200px"));
+		flexNome.setWidget(0, 2, txtNomePopup);
+
+		VerticalPanel vertVisivel = new VerticalPanel();
+		//dialogContent.setWidget(3, 0, vertVisivel);
+
+		FlexTable flexDesc = new FlexTable();
+		vertVisivel.add(flexDesc);
+		Label lblDesc = new Label("Visível: ");
+		lblDesc.setWidth(new String("70px"));
+		lblDesc.setHorizontalAlignment(Label.ALIGN_RIGHT);
+		flexDesc.setWidget(0, 0, lblDesc);
+		CheckBox chkVisivel = new CheckBox();
+		flexDesc.setWidget(0, 1, chkVisivel);
+
+		VerticalPanel vertBotoes = new VerticalPanel();
+		dialogContent.setWidget(4, 0, vertBotoes);
+
+		FlexTable flexBotoes = new FlexTable();
+		vertBotoes.add(flexBotoes);
+		Button btnSalvar = new Button("Salvar");
+
+		btnSalvar.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				int row = dataTable.getRowCount();
+
+				nome.setText(txtNomePopup.getText());
+				
+				dialog.hide();
+			}
+		});
+
+		Button btnCancelar = new Button("Cancelar");
+
+		btnCancelar.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				dialog.hide();
+			}
+		});
+
+		flexBotoes.setWidget(0, 5, btnSalvar);
+		flexBotoes.setWidget(0, 6, btnCancelar);
+
+		dialog.setWidget(dialogContent);
+		dialog.show();
+
 	}
 	
 }
