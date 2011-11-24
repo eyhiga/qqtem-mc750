@@ -6,6 +6,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.DialogBox;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HasHorizontalAlignment;
 import com.google.gwt.user.client.ui.Hyperlink;
 import com.google.gwt.user.client.ui.Label;
@@ -135,9 +136,10 @@ public class Denuncias extends Composite {
 		conteudo.setWidth("100%");
 		conteudo.setHeight("100%");
 		
-		Label denun = new Label("Denúncia");
+		//Label denun = new Label("Denúncia");
+		HTML denun = new HTML("<center><h1>Denúncia</h1></center>");
 		conteudo.setWidget(0, 0, denun);
-		denun.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
+		//denun.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		
 		Label descr = new Label(lista.getDescricao(idDenuncia));
 		conteudo.setWidget(1, 0, descr);

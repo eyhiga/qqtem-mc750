@@ -20,6 +20,9 @@ public class Login extends Composite {
 		VerticalPanel verticalPanel = new VerticalPanel();
 		initWidget(verticalPanel);
 		
+		verticalPanel.setStyleName("gwt-VerticalPanel");
+		verticalPanel.setBorderWidth(1);
+		
 		FlexTable flexTable = new FlexTable();
 		verticalPanel.add(flexTable);
 		

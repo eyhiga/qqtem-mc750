@@ -67,8 +67,6 @@ public class QqTem implements EntryPoint {
 		flexTable.setWidget(1, 0, logout);
 		
 		verticalPanel = new VerticalPanel();
-		verticalPanel.setStyleName("gwt-VerticalPanel");
-		verticalPanel.setBorderWidth(1);
 		flexTable.setWidget(2, 0, verticalPanel);
 		verticalPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_CENTER);
 		verticalPanel.setVerticalAlignment(VerticalPanel.ALIGN_MIDDLE);
@@ -94,7 +92,6 @@ public class QqTem implements EntryPoint {
 		
 		verticalPanel.setSize("100%", "100%");
 		verticalPanel.add(homeAbas);
-		verticalPanel.setBorderWidth(1);
 		
 		logout.setVisible(true);
 		
