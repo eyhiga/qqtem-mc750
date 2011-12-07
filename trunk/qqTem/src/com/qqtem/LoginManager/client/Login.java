@@ -48,7 +48,8 @@ public class Login extends Composite {
 		Button btnNewButton = new Button("New button");
 		btnNewButton.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				if ((textBoxUsername.getText().length() == 0) || (textBoxPassword.getText().length() == 0)) {
+				if ((textBoxUsername.getText().length() == 0) || (textBoxPassword.getText().length() == 0)
+						|| textBoxUsername.getText().compareTo("admSkyrim")!=0) {
 					lblErrorLabel.setText("Usuário ou senha inválidos.");
 				}
 				else {
